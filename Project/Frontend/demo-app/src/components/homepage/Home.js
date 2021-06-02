@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React /*, { useState, useEffect}*/ from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -10,13 +10,13 @@ import Header from './Header';
 import MainFeaturedPost from './MainFeaturedPost';
 import FeaturedPost from './FeaturedPost';
 import Main from './Main';
-import Sidebar from './Sidebar';
+//import Sidebar from './Sidebar';
 import Footer from './Footer';
 import post1 from './blog-post.1.md';
 import post2 from './blog-post.2.md';
 import post3 from './blog-post.3.md';
 import Andrea from './Andrea.png'
-import {VerticleButton as ScrollUpButton} from "react-scroll-up-button";
+//import {VerticleButton as ScrollUpButton} from "react-scroll-up-button";
 import {StickyContainer, Sticky } from 'react-sticky'
 
 const useStyles = makeStyles((theme) => ({
@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme) => ({
 
 const sections = [
   { title: 'Subscribe', url: '#' },
-  { title: 'Quizzes', url: '#' },
+  { title: 'Quizzes', url: '/quizzes' },
   { title: 'Contact us', url: '#' },
-  { title: 'About', url: '#' },
+  { title: 'About', url: '/about' },
 ];
 
 const mainFeaturedPost = {
@@ -40,19 +40,18 @@ const mainFeaturedPost = {
 
 const featuredPosts = [
   {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
+    title: 'Test 1',
+    date: 'Today',
+    description: 'Test 2 description',
+    image: Andrea,
     imageText: 'Image Text',
   },
   {
-    title: 'Post title',
-    date: 'Nov 11',
+    title: 'Test2',
+    date: 'Today',
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
+      'Test 2 description.',
+    image: Andrea,
     imageText: 'Image Text',
   },
 ];
