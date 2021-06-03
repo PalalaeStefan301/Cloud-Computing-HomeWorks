@@ -105,6 +105,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             onClick={loginn}
+            href="/"
             className={classes.submit}
           >
             Sign In

@@ -13,8 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
 import Header from '../../homepage/Header';
-import axios from 'axios'
+import { Link as RouterLink } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -31,7 +32,7 @@ function Copyright() {
 
 const sections = [
   { title: 'Subscribe', url: '#' },
-  { title: 'Quizzes', url: '/quizzes' },
+  { title: 'Quizzes', url: '/teacher' },
   { title: 'Contact us', url: '#' },
   { title: 'About', url: '/about' },
 ];
@@ -67,55 +68,66 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(6),
   },
 }));
-const URL = "https://jsonplaceholder.typicode.com/users";
-
-
+const URL = "https://europe-west1-cloud-2021-project-final.cloudfunctions.net/quiz/all";
 
 export default function Quizzes_teacher() {
   const classes = useStyles();
   const UseEffectSecondArgument = () => {
     const [quizzes, setQuizzes] = useState([]);
+    var lista = [];
+    var lista2 = [];
     const getQuizzes = async () => {
       const response = await fetch(URL);
       const quizzess = await response.json();
-      setQuizzes(quizzess);
+      console.log(quizzess)
+
+      for (const [id, value] of Object.entries(quizzess)) {
+        lista2.push(`${value["question_count"]}`);
+        lista.push(`${value["title"]}`);
+      }
+      lista = lista.map(function (x, it) { return { "title": x, "question_count": lista2[it] } });
+      setQuizzes(lista);
     };
-  
+
     useEffect(() => {
       getQuizzes();
-    },[]);
-    return(
+    }, []);
+    return (
       <Container className={classes.cardGrid} maxWidth="md">
-            {/* End hero unit */}
-            <Grid container spacing={4}>
-              {quizzes.map((quiz) => (
-                <Grid item key={quiz} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image="https://source.unsplash.com/random"
-                      title="Image title"
-                    />
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                      </Typography>
-                      <Typography>
-                        {quiz.name}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        Start
+        {/* End hero unit */}
+        <Grid container spacing={4}>
+          {quizzes.map((quiz) => (
+            <Grid item key={quiz["title"]} xs={12} sm={6} md={4}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image="https://www.elearningworld.org/wp-content/uploads/2016/05/quiz-2192590_640.jpg"
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                  </Typography>
+                  <Typography>
+                    {`${quiz["title"]}`}
+                    <Box p={1} bgcolor="background.paper">
+                    </Box>
+                    {`${quiz["question_count"]}`}
+                    questions
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button component={RouterLink} to="/quiz" size="small" color="primary">
+                    Start
                       </Button>
-                      <Button size="small" color="primary">
-                        Edit
+                  <Button size="small" color="primary">
+                    Edit
                       </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
+                </CardActions>
+              </Card>
             </Grid>
-          </Container>
+          ))}
+        </Grid>
+      </Container>
     )
   };
   return (
@@ -123,9 +135,9 @@ export default function Quizzes_teacher() {
       <CssBaseline />
       <Header title="Home" sections={sections} />
       <main>
-      <div className="App">
-				{/* <PostList /> */}
-			</div>
+        <div className="App">
+          {/* <PostList /> */}
+        </div>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
@@ -138,29 +150,18 @@ export default function Quizzes_teacher() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button href="/createQuiz" variant="contained" color="primary">
                     Create quiz
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
                   </Button>
                 </Grid>
               </Grid>
             </div>
           </Container>
-          <UseEffectSecondArgument/>
+          <UseEffectSecondArgument />
         </div>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
-        </Typography>
         <Copyright />
       </footer>
       {/* End footer */}

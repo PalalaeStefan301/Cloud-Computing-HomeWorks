@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import classes from './index.css';
 import Header from '../homepage/Header';
-import {StickyContainer, Sticky } from 'react-sticky'
 import Container from '@material-ui/core/Container';
 
 const sections = [
-    { title: 'Subscribe', url: '#' },
-    { title: 'Quizzes', url: '/quizzes' },
-    { title: 'Contact us', url: '#' },
-    { title: 'About', url: '/about' },
-  ];
+	{ title: 'Subscribe', url: '#' },
+	{ title: 'Quizzes', url: '/teacher' },
+	{ title: 'Contact us', url: '#' },
+	{ title: 'About', url: '/about' },
+];
 
 export default function App() {
+
+	const URL = "https://europe-west1-cloud-2021-project-final.cloudfunctions.net/question?id=DRVi2cHvfxTom8Lx1Vam";
+	const getQuestions = async () => {
+		const response = await fetch(URL);
+		const quizzess = await response.json();
+		console.log(quizzess)
+	}
 	const questions = [
 		{
 			questionText: 'What is the capital of France?',
@@ -50,7 +56,7 @@ export default function App() {
 			],
 		},
 	];
-    
+
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [showScore, setShowScore] = useState(false);
 	const [score, setScore] = useState(0);
@@ -67,45 +73,35 @@ export default function App() {
 			setShowScore(true);
 		}
 	};
+	useEffect(() => {
+		getQuestions();
+	}, []);
 	return (
-        <React.Fragment>
-        <Container maxWidth="lg">
-        <StickyContainer style={{ overflowY: 'auto' }}>
-          <Sticky>
-          {({
-            sticky_style,
-            isSticky,
-            wasSticky,
-            distanceFromTop,
-            distanceFromBottom,
-            calculatedHeight
-          }) => (
-            <Header title="Home" sections={sections} style={sticky_style} />
-          )}
-          </Sticky>
-        </StickyContainer>
-		<div className={classes.my_app}>
-			{showScore ? (
-				<div className={classes.score_section}>
-					You scored {score} out of {questions.length}
-				</div>
-			) : (
-				<>
-					<div className={classes.question_section}>
-						<div className={classes.question_count}>
-							<span>Question {currentQuestion + 1}</span>/{questions.length}
+		<React.Fragment>
+			<Container maxWidth="lg">
+				<Header title="Home" sections={sections} />
+				<div className={classes.my_app}>
+					{showScore ? (
+						<div className={classes.score_section}>
+							You scored {score} out of {questions.length}
 						</div>
-						<div className={classes.question_text}>{questions[currentQuestion].questionText}</div>
-					</div>
-					<div className={classes.answer_section}>
-						{questions[currentQuestion].answerOptions.map((answerOption) => (
-							<button class="button button1" onClick={() => handleAnswerOptionClick(answerOption.isCorrect)}>{answerOption.answerText}</button>
-						))}
-					</div>
-				</>
-			)}
-		</div>
-        </Container>
-        </React.Fragment>
+					) : (
+						<>
+							<div className={classes.question_section}>
+								<div className={classes.question_count}>
+									<span>Question {currentQuestion + 1}</span>/{questions.length}
+								</div>
+								<div className={classes.question_text}>{questions[currentQuestion].questionText}</div>
+							</div>
+							<div className={classes.answer_section}>
+								{questions[currentQuestion].answerOptions.map((answerOption) => (
+									<button className="button button1" onClick={() => handleAnswerOptionClick(answerOption.isCorrect)}>{answerOption.answerText}</button>
+								))}
+							</div>
+						</>
+					)}
+				</div>
+			</Container>
+		</React.Fragment>
 	);
 }

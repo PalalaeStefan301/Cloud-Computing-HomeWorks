@@ -132,6 +132,7 @@ export default function SignUp() {
           <Button
             type="submit"
             fullWidth
+            href="/"
             variant="contained"
             color="primary"
             className={classes.submit}

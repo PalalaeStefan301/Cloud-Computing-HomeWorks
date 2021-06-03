@@ -41,7 +41,9 @@ export default function Header(props) {
           noWrap
           className={classes.toolbarTitle}
         >
-          <img src={Logo} width="150" alt="150"/>
+          <a href='/'>
+            <img href='www.google.com' src={Logo} width="150" alt="150"/>
+          </a>
         </Typography>
         <IconButton>
           <SearchIcon />

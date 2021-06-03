@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const sections = [
   { title: 'Subscribe', url: '#' },
-  { title: 'Quizzes', url: '/quizzes' },
+  { title: 'Quizzes', url: '/teacher' },
   { title: 'Contact us', url: '#' },
   { title: 'About', url: '/about' },
 ];
@@ -40,18 +40,17 @@ const mainFeaturedPost = {
 
 const featuredPosts = [
   {
-    title: 'Test 1',
+    title: 'DB Quiz',
     date: 'Today',
-    description: 'Test 2 description',
-    image: Andrea,
+    description: 'Test your knowledge in DB',
+    image: "https://www.elearningworld.org/wp-content/uploads/2016/05/quiz-2192590_640.jpg",
     imageText: 'Image Text',
   },
   {
-    title: 'Test2',
+    title: 'Java Quiz',
     date: 'Today',
-    description:
-      'Test 2 description.',
-    image: Andrea,
+    description: 'Test your knowledge in Java',
+    image: "https://www.elearningworld.org/wp-content/uploads/2016/05/quiz-2192590_640.jpg",
     imageText: 'Image Text',
   },
 ];
@@ -112,14 +111,6 @@ export default function Home() {
             ))}
           </Grid>
           <Grid container spacing={5} className={classes.mainGrid}>
-            <Main title="Main" posts={posts} />
-            {/*
-            <Sidebar
-              title={sidebar.title}
-              description={sidebar.description}
-              archives={sidebar.archives}
-            />
-            */}
           </Grid>
         </main>
       </Container>
